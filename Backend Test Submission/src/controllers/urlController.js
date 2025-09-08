@@ -3,7 +3,6 @@ const { generateShortcode, isValidShortcode } = require('../utils/shortcode');
 const store = require('../models/store');
 
 function baseUrl(req) {
-  // Allow override in env for deployed host
   return process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
 }
 
@@ -29,7 +28,6 @@ function createShortUrl(req, res, next) {
         return res.status(409).json({ error: 'Shortcode already in use.' });
       }
     } else {
-      // auto-generate unique
       do { code = generateShortcode(6); } while (store.hasShortcode(code));
     }
 
@@ -63,10 +61,9 @@ function redirect(req, res) {
   const now = Date.now();
   const exp = Date.parse(record.expiry);
   if (isFinite(exp) && now > exp) {
-    return res.status(410).json({ error: 'Link expired.' }); // 410 Gone
+    return res.status(410).json({ error: 'Link expired.' }); 
   }
 
-  // capture click analytics
   const ip =
     (req.headers['x-forwarded-for'] || '').toString().split(',')[0].trim() ||
     req.socket.remoteAddress;
@@ -76,7 +73,7 @@ function redirect(req, res) {
     ip,
     geo: ip.startsWith('10.') || ip.startsWith('192.168.') || ip.startsWith('172.16.')
       ? 'private'
-      : 'unknown' // coarse-grained; no external lookup
+      : 'unknown' 
   };
   store.addClick(code, click);
   req.logEvent && req.logEvent('REDIRECT', { shortcode: code });

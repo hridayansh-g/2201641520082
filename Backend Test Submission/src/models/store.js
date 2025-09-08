@@ -1,6 +1,6 @@
-// In-memory storage (sufficient for assignment)
-const urlMap = new Map();      // shortcode -> { url, shortcode, createdAt, expiry }
-const clickMap = new Map();    // shortcode -> [ { timestamp, referrer, ip, geo } ]
+// In-memory storage 
+const urlMap = new Map();      
+const clickMap = new Map();    
 
 function hasShortcode(code) { return urlMap.has(code); }
 
