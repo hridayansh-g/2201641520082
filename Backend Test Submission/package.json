@@ -1,0 +1,14 @@
+{
+  "name": "backend-test-submission",
+  "version": "1.0.0",
+  "description": "URL Shortener Microservice - Backend Test Submission",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
